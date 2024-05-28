@@ -1,0 +1,2 @@
+# CodingPractice
+ Practicing programming basics
