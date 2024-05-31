@@ -2,6 +2,8 @@
 //https://code.visualstudio.com/docs/csharp/get-started
 //Command palette - new .net - console app template
 
+using System.Configuration.Assemblies;
+
 Console.WriteLine("STARTING PROGRAM");
 Test();
 
@@ -30,42 +32,39 @@ string arrayToString(int[] a){
 // ===========
 
 void quickSort(ref int[] arr, int leftBound, int rightBound){
-    Console.WriteLine("\t Sorting [" + leftBound+ ", " + rightBound + "] " + arrayToString(arr));
-
-    if(rightBound - leftBound <= 0){
+    if(rightBound < leftBound){
         return;
     }
+
+    int pi = partition(ref arr, leftBound, rightBound);
+    //Recurse left and right
+    quickSort(ref arr, leftBound, pi-1);
+    quickSort(ref arr, pi+1, rightBound);
+}
+
+int partition(ref int[] arr, int leftBound, int rightBound){
+    
+    Console.WriteLine("\t Parting [" + leftBound+ ", " + rightBound + "] " + arrayToString(arr));
+
     //Select the pivot value  - say last element
-    int n = arr.Length - 1;
+    int pivotValue = arr[rightBound];
+    
+    int i = leftBound - 1; // Represents greater value
 
-    int pivot = arr[n-1];
+    for(int j = leftBound; j < rightBound - 1; j++){
+        if(arr[j] <= pivotValue){
+            i++; //i moves to j
 
-    //Iterate from left and right - swapping high values right, and low to the left
-    int i = 0; //i will be set to the leftmost value greater than pivot
-    int j = n-1; //j will be set to the rightmost value less than pivot
-
-    while(i < j){
-        if(arr[i] > pivot && arr[j] < pivot){
-            //Swap
-            int temp = arr[j];
-            arr[j] = arr[i];
-            arr[i] = temp;
-            i++;
-            j--;
-        }
-        else if(arr[i] < pivot){
-            i++;
-        }
-        else{
-            j++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
     }
 
-    //Move the pivot to it's correct positon
-    arr[n-1] = arr[j];
-    arr[j] = pivot;
+    arr[rightBound] = arr[i+1];
+    arr[i+1] = pivotValue;
 
-    //Recurse left and right
-    quickSort(ref arr, leftBound, j-1);
-    quickSort(ref arr, j+1, rightBound);
+    Console.WriteLine("\t Parted [" + leftBound + ", " + rightBound + "] " + arrayToString(arr));
+    
+    return i+1;
 }
