@@ -12,3 +12,10 @@
 /**/obj
 /MergeSort/obj
 .DS_Store
+/Malloc/malloc.dSYM
+/Malloc/.vscode
+Malloc/malloc
+Memory/malloc
+/Memory/malloc.dSYM
+/Memory/.vscode
+.vscode/tasks.json
